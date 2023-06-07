@@ -11,6 +11,7 @@ import com.example.test.repositories.MainRepository
 import com.example.test.utils.ApiStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Named
@@ -33,7 +34,7 @@ class MainViewModel @Inject constructor(
                     _productData.value = it
                     _status.value = ApiStatus.COMPLETE
                 }
-                catch (_ : Exception){
+                catch (_ : HttpException){
                     _status.value = ApiStatus.FAILED
                 }
             }

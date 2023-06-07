@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.test.R
 import com.example.test.databinding.FragmentSignInBinding
 import com.example.test.utils.ApiStatus
 import com.example.test.viewmodels.SignInViewModel
@@ -38,6 +40,7 @@ class SignInFragment : Fragment() {
                         .putString("accessToken", token.payload.token.accessToken)
                         .putString("refreshToken", token.payload.token.refreshToken)
                         .apply()
+                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                 }
             }
         }
