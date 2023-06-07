@@ -23,8 +23,8 @@ class RecycleViewAdapter(private val context : Context, private val data : Array
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = data[position].name
-        holder.description.text = data[position].description
+        holder.name.text = "Название: ${data[position].name}"
+        holder.description.text = "Описание: ${data[position].description}"
     }
 
     override fun getItemCount(): Int {
