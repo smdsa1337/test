@@ -31,6 +31,10 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val prefs = requireActivity().getSharedPreferences("token", Context.MODE_PRIVATE)
+        if (prefs.getString("accessToken", "") != null) {
+            findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+        }
         binding.signInButton.setOnClickListener {
             viewModel.auth(binding.login.text.toString(), binding.password.text.toString())
             viewModel.authStatus.observe(viewLifecycleOwner) {
