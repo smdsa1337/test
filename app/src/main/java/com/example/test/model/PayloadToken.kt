@@ -1,5 +1,5 @@
 package com.example.test.model
 
-data class Payload(
+data class PayloadToken(
     val token: Token
 )

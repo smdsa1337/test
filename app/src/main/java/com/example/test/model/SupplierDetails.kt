@@ -1,5 +1,5 @@
 package com.example.test.model
 
 data class SupplierDetails(
-    val payload: Payload
+    val payload: PayloadToken
 )
