@@ -1,5 +1,5 @@
 package com.example.test.model
 
 data class PayloadProduct(
-    val name : String
+    val content : ArrayList<Product>
 )
