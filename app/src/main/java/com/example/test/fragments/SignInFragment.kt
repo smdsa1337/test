@@ -2,6 +2,7 @@ package com.example.test.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,11 +34,14 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val prefs = requireActivity().getSharedPreferences("token", Context.MODE_PRIVATE)
         val refreshToken = prefs.getString("refreshToken", "")
-        if (refreshToken != null) {
-            viewModel.refreshToken(refreshToken)
+        val accessToken = prefs.getString("accessToken", "")
+
+        if (refreshToken != null && accessToken != null) {
+            viewModel.refreshToken(accessToken, refreshToken)
             viewModel.tokenStatus.observe(viewLifecycleOwner) {
                 if (it == ApiStatus.COMPLETE) {
-                    val token = viewModel.authData.value?.payload?.token?.accessToken
+
+                    val token = viewModel.authData.value!!.payload.token.accessToken
                     prefs.edit().putString("accessToken", token).apply()
                     findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                 }
@@ -53,6 +57,10 @@ class SignInFragment : Fragment() {
                         .putString("accessToken", token.payload.token.accessToken)
                         .putString("refreshToken", token.payload.token.refreshToken)
                         .apply()
+                    Log.e(
+                        "TAG",
+                        "${token.payload.token.accessToken} ${token.payload.token.refreshToken}"
+                    )
                     findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
                 }
             }

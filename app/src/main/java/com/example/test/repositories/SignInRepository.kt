@@ -18,9 +18,9 @@ class SignInRepository @Inject constructor(
         }
     }
 
-    fun refreshToken(refreshToken: String): Flow<SupplierDetails> {
+    fun refreshToken(accessToken: String, refreshToken: String): Flow<SupplierDetails> {
         return flow {
-            emit(service.refreshToken(RefreshTokenRequest(refreshToken)))
+            emit(service.refreshToken("Bearer $accessToken", RefreshTokenRequest(refreshToken)))
         }
     }
 }
