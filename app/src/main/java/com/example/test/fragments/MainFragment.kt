@@ -1,21 +1,19 @@
 package com.example.test.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.test.databinding.FragmentSignInBinding
-import com.example.test.utils.ApiStatus
+import com.example.test.databinding.FragmentMainBinding
 import com.example.test.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignInFragment : Fragment() {
+class MainFragment : Fragment() {
 
-    private var _binding : FragmentSignInBinding? = null
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<SignInViewModel>()
 
@@ -23,26 +21,13 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.auth("gormargaryan.1623@yandex.ru", "Password2021")
-        viewModel.authStatus.observe(viewLifecycleOwner) {
-            if (it == ApiStatus.COMPLETE) {
-                val token = viewModel.authData.value!!
-                requireActivity().getSharedPreferences("token", Context.MODE_PRIVATE).edit()
-                    .putString("accessToken", token.payload.token.accessToken)
-                    .putString("refreshToken", token.payload.token.refreshToken)
-                    .apply()
-            }
-        }
-
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
