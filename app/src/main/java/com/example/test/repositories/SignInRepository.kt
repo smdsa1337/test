@@ -2,6 +2,7 @@ package com.example.test.repositories
 
 import com.example.test.model.SupplierDetails
 import com.example.test.remote_model.LoginAndPasswordRequest
+import com.example.test.remote_model.RefreshTokenRequest
 import com.example.test.service.SignInService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,6 +15,12 @@ class SignInRepository @Inject constructor(
     fun signIn(login: String, password: String): Flow<SupplierDetails> {
         return flow {
             emit(service.supplierLogin(LoginAndPasswordRequest(login, password)))
+        }
+    }
+
+    fun refreshToken(refreshToken: String): Flow<SupplierDetails> {
+        return flow {
+            emit(service.refreshToken(RefreshTokenRequest(refreshToken)))
         }
     }
 }

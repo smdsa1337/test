@@ -19,6 +19,8 @@ class SignInViewModel @Inject constructor(
 ) : ViewModel() {
     private val _authStatus: MutableLiveData<ApiStatus> = MutableLiveData()
     val authStatus: LiveData<ApiStatus> get() = _authStatus
+    private val _tokenStatus: MutableLiveData<ApiStatus> = MutableLiveData()
+    val tokenStatus: LiveData<ApiStatus> get() = _tokenStatus
     private val _authData: MutableLiveData<SupplierDetails> = MutableLiveData()
     val authData: LiveData<SupplierDetails> get() = _authData
 
@@ -32,6 +34,20 @@ class SignInViewModel @Inject constructor(
                 } catch (e: HttpException) {
                     _authStatus.value = ApiStatus.FAILED
                 }
+            }
+        }
+    }
+
+    fun refreshToken(refreshToken: String) {
+        viewModelScope.launch {
+            _tokenStatus.value = ApiStatus.LOADING
+            try {
+                repository.refreshToken(refreshToken).collect {
+                    _authData.value = it
+                    _authStatus.value = ApiStatus.COMPLETE
+                }
+            } catch (e: HttpException) {
+                _authStatus.value = ApiStatus.FAILED
             }
         }
     }

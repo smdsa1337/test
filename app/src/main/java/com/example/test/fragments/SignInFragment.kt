@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
 
-    private var _binding : FragmentSignInBinding? = null
+    private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<SignInViewModel>()
 
@@ -32,15 +32,24 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val prefs = requireActivity().getSharedPreferences("token", Context.MODE_PRIVATE)
-        if (prefs.getString("accessToken", "") != null) {
-            findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+        val refreshToken = prefs.getString("refreshToken", "")
+        if (refreshToken != null) {
+            viewModel.refreshToken(refreshToken)
+            viewModel.tokenStatus.observe(viewLifecycleOwner) {
+                if (it == ApiStatus.COMPLETE) {
+                    val token = viewModel.authData.value?.payload?.token?.accessToken
+                    prefs.edit().putString("accessToken", token).apply()
+                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+                }
+            }
         }
+
         binding.signInButton.setOnClickListener {
             viewModel.auth(binding.login.text.toString(), binding.password.text.toString())
             viewModel.authStatus.observe(viewLifecycleOwner) {
                 if (it == ApiStatus.COMPLETE) {
                     val token = viewModel.authData.value!!
-                    requireActivity().getSharedPreferences("token", Context.MODE_PRIVATE).edit()
+                    prefs.edit()
                         .putString("accessToken", token.payload.token.accessToken)
                         .putString("refreshToken", token.payload.token.refreshToken)
                         .apply()
