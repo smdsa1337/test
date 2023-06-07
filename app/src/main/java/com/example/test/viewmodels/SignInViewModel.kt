@@ -28,13 +28,12 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             _authStatus.value = ApiStatus.LOADING
             repository.signIn(login, password).collect {
-                // try {
-                _authData.value = it
-                _authStatus.value = ApiStatus.COMPLETE
-                /*} catch (e: HttpException) {
-                    Log.e("PIZDA", e.stackTraceToString())
+                try {
+                    _authData.value = it
+                    _authStatus.value = ApiStatus.COMPLETE
+                } catch (e: HttpException) {
                     _authStatus.value = ApiStatus.FAILED
-                }*/
+                }
             }
         }
     }
@@ -45,10 +44,10 @@ class SignInViewModel @Inject constructor(
             try {
                 repository.refreshToken(accessToken, refreshToken).collect {
                     _authData.value = it
-                    _authStatus.value = ApiStatus.COMPLETE
+                    _tokenStatus.value = ApiStatus.COMPLETE
                 }
             } catch (e: HttpException) {
-                _authStatus.value = ApiStatus.FAILED
+                _tokenStatus.value = ApiStatus.FAILED
             }
         }
     }
