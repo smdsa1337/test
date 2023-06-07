@@ -27,8 +27,8 @@ class SignInViewModel @Inject constructor(
             _authStatus.value = ApiStatus.LOADING
             repository.signIn(login, password).collect {
                 try {
-                    _authStatus.value = ApiStatus.COMPLETE
                     _authData.value = it
+                    _authStatus.value = ApiStatus.COMPLETE
                 } catch (e: HttpException) {
                     _authStatus.value = ApiStatus.FAILED
                 }

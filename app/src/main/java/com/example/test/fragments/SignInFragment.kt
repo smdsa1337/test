@@ -33,7 +33,7 @@ class SignInFragment : Fragment() {
         viewModel.auth("gormargaryan.1623@yandex.ru", "Password2021")
         viewModel.authStatus.observe(viewLifecycleOwner) {
             if (it == ApiStatus.COMPLETE) {
-                Log.e("TAG", viewModel.authData.toString())
+                Log.e("TAG", viewModel.authData.value.toString())
             }
         }
 
