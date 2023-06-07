@@ -29,18 +29,18 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.auth("gormargaryan.1623@yandex.ru", "Password2021")
-        viewModel.authStatus.observe(viewLifecycleOwner) {
-            if (it == ApiStatus.COMPLETE) {
-                val token = viewModel.authData.value!!
-                requireActivity().getSharedPreferences("token", Context.MODE_PRIVATE).edit()
-                    .putString("accessToken", token.payload.token.accessToken)
-                    .putString("refreshToken", token.payload.token.refreshToken)
-                    .apply()
+        binding.signInButton.setOnClickListener {
+            viewModel.auth(binding.login.text.toString(), binding.password.text.toString())
+            viewModel.authStatus.observe(viewLifecycleOwner) {
+                if (it == ApiStatus.COMPLETE) {
+                    val token = viewModel.authData.value!!
+                    requireActivity().getSharedPreferences("token", Context.MODE_PRIVATE).edit()
+                        .putString("accessToken", token.payload.token.accessToken)
+                        .putString("refreshToken", token.payload.token.refreshToken)
+                        .apply()
+                }
             }
         }
-
     }
 
 
