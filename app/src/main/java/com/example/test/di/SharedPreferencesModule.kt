@@ -14,7 +14,7 @@ import javax.inject.Named
 class SharedPreferencesModule {
     @Provides
     @Named("sharedPreferencesToken")
-    fun provideTokenSharedPreferences(application: Application): SharedPreferences {
-        return application.getSharedPreferences("token", Context.MODE_PRIVATE)
+    fun provideTokenSharedPreferences(application: Application): String {
+        return application.getSharedPreferences("token", Context.MODE_PRIVATE).getString("accessToken", "").toString()
     }
 }

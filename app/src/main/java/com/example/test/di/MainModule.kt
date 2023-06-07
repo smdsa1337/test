@@ -17,7 +17,7 @@ class MainModule {
     @Provides
     @Singleton
     @Named("mainService")
-    fun provideAuthService(@Named("retrofit") retrofit: Retrofit): ProductsService =
+    fun provideAuthService(@Named("retrofit2") retrofit: Retrofit): ProductsService =
         retrofit.create(ProductsService::class.java)
 
     @Provides
