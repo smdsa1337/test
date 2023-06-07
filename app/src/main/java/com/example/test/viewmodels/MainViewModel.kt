@@ -5,14 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.test.model.PayloadProduct
-import com.example.test.model.Product
-import com.example.test.model.SupplierDetails
 import com.example.test.repositories.MainRepository
 import com.example.test.utils.ApiStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Named
 

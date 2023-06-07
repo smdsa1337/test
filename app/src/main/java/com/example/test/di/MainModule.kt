@@ -1,9 +1,7 @@
 package com.example.test.di
 
 import com.example.test.repositories.MainRepository
-import com.example.test.repositories.SignInRepository
 import com.example.test.service.ProductsService
-import com.example.test.service.SignInService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
