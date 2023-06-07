@@ -1,4 +1,4 @@
-package com.gggapp.testcase.di
+package com.example.test.di
 
 import dagger.Module
 import dagger.Provides
