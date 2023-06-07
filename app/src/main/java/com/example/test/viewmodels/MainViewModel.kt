@@ -1,10 +1,12 @@
 package com.example.test.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.test.model.PayloadProduct
+import com.example.test.model.Products
 import com.example.test.repositories.MainRepository
 import com.example.test.utils.ApiStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +22,8 @@ class MainViewModel @Inject constructor(
 
     private val _status: MutableLiveData<ApiStatus> = MutableLiveData()
     val status: LiveData<ApiStatus> get() = _status
-    private val _productData: MutableLiveData<PayloadProduct> = MutableLiveData()
-    val productData: LiveData<PayloadProduct> get() = _productData
+    private val _productData: MutableLiveData<Products> = MutableLiveData()
+    val productData: LiveData<Products> get() = _productData
 
     fun getProducts(){
         viewModelScope.launch {

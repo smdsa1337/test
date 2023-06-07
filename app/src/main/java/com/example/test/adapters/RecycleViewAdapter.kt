@@ -4,13 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.test.R
+import com.example.test.model.Product
 
-class RecycleViewAdapter(private val context : Context) : RecyclerView.Adapter<RecycleViewAdapter.ViewHolder>() {
+class RecycleViewAdapter(private val context : Context, private val data : ArrayList<Product>) : RecyclerView.Adapter<RecycleViewAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-
+        val name : TextView = itemView.findViewById(R.id.name)
+        val description : TextView = itemView.findViewById(R.id.description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,10 +23,11 @@ class RecycleViewAdapter(private val context : Context) : RecyclerView.Adapter<R
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.name.text = data[position].name
+        holder.description.text = data[position].description
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return data.size
     }
 }
